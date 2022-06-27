@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+     return $request->user();
+ });
+
+Route::post('/home', [HomeController::class, 'index']);
 
 Route::prefix("v1")->group(function () {
     Route::prefix("/classroom")->middleware('utemAuth')->group(function () {

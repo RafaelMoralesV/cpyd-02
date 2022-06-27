@@ -1,0 +1,27 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "CPyD - Trabajo 2: API REST",
+        "description": "Documentación sobre la API REST desarrollada por: Rafael Morales y Diego Oyarce",
+        "contact": {
+            "email": "doyarce@utem.cl\n *                 rmorales@utem.cl"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "description": "Home page",
+                "responses": {
+                    "default": {
+                        "description": "Welcome page"
+                    }
+                }
+            }
+        }
+    }
+}
