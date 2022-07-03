@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UtemAuthController;
+use App\Htpp\Controllers\AttendanceController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,60 +17,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-     return $request->user();
- });
-
-Route::post('/home', [HomeController::class, 'index']);
-
 Route::prefix("v1")->group(function () {
-    Route::prefix("/classroom")->middleware('utemAuth')->group(function () {
-        Route::post("/getin", function () {
-            return [
-                "classroom" => "M2-302",
-                "subject" => "INFB8090",
-                "entrance" => "2022-06-15T03:31:15.807Z",
-            ];
-        });
+    Route::prefix("/classroom")
+    ->middleware('utemAuth')
+    ->controller(UtemAuthController::class)
+    ->group(function () {
+        Route::post("/getin", 'getin');
 
-        Route::post("/getout", function () {
-            return [
-                "classroom" => "M2-302",
-                "subject" => "INFB8090",
-                "entrance" => "2022-06-15T03:31:15.807Z",
-                "leaving" => "2022-06-15T03:31:15.807Z",
-            ];
-        });
+        Route::post("/getout", 'getout');
 
-        Route::get("/attendances", function () {
-            return [
-                    "classroom" => "M2-302",
-                    "subject" => "INFB8090",
-                    "entrance" => "2022-06-15T01:19:55.984Z",
-                    "leaving" => "2022-06-15T01:19:55.984Z",
-            ];
-        });
+        Route::get("/attendances", 'attendances');
     });
 
-    Route::prefix('authentication')->group(function () {
-        Route::get('/login', function () {
-            return [
-                "classroom" => "M2-302",
-                "subject" => "INFB8090",
-                "entrance" => "2022-06-15T03:35:01.907Z",
-                "leaving" => "2022-06-15T03:35:01.907Z",
-                "email" => "ssalazar@utem.cl",
-            ];
-        });
+    Route::prefix('authentication')
+    ->controller(UtemAuthController::class)
+    ->group(function () {
+        Route::get('/login', 'login');
 
-        Route::get('/result', function () {
-            return [
-                "classroom" => "M2-302",
-                "subject" => "INFB8090",
-                "entrance" => "2022-06-15T03:35:01.907Z",
-                "leaving" => "2022-06-15T03:35:01.907Z",
-                "email" => "ssalazar@utem.cl",
-            ];
-        });
+        Route::get('/result', 'result');
     });
 });

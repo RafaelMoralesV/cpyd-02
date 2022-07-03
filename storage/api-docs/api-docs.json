@@ -4,7 +4,7 @@
         "title": "CPyD - Trabajo 2: API REST",
         "description": "Documentación sobre la API REST desarrollada por: Rafael Morales y Diego Oyarce",
         "contact": {
-            "email": "doyarce@utem.cl\n *                 rmorales@utem.cl"
+            "email": "doyarce@utem.cl,\n *                 rmorales@utem.cl"
         },
         "license": {
             "name": "Apache 2.0",
@@ -13,12 +13,67 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/v1/classroom/getin": {
+            "post": {
+                "description": "Ingresar a la sala de clases",
+                "operationId": "16736bc6a0c9a1d14c026dad873c82d1",
+                "responses": {
+                    "default": {
+                        "description": "Respuesta de ingreso"
+                    }
+                }
+            }
+        },
+        "/v1/classroom/getout": {
+            "post": {
+                "description": "Retirarse de la sala de clases",
+                "operationId": "749754b2b1240349277e51616e1f916f",
+                "responses": {
+                    "default": {
+                        "description": "Respuesta de salida"
+                    }
+                }
+            }
+        },
+        "/v1/classroom/attendances": {
+            "get": {
+                "description": "Lista de asistencias",
+                "operationId": "dc759f5060e21b8784344c9f1cc74e04",
+                "responses": {
+                    "default": {
+                        "description": "Respuesta de asistencias"
+                    }
+                }
+            }
+        },
         "/": {
             "get": {
                 "description": "Home page",
                 "responses": {
                     "default": {
                         "description": "Welcome page"
+                    }
+                }
+            }
+        },
+        "/v1/authenticaiton/login": {
+            "get": {
+                "description": "Login",
+                "operationId": "18e21c4346c62b11ec4322dc6e03ae32",
+                "responses": {
+                    "default": {
+                        "description": "Respuesta de Login"
+                    }
+                }
+            }
+        },
+        "/v1/authentication/result": {
+            "get": {
+                "description": "Auth result",
+                "operationId": "ef0bce97f641fba4ed4131b09539f063",
+                "responses": {
+                    "default": {
+                        "description": "Resultado de autenticacion"
                     }
                 }
             }
