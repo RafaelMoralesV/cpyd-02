@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UtemAuthController;
-use App\Htpp\Controllers\AttendanceController;
+use App\Http\Controllers\AttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +19,7 @@ use App\Htpp\Controllers\AttendanceController;
 Route::prefix("v1")->group(function () {
     Route::prefix("/classroom")
     ->middleware('utemAuth')
-    ->controller(UtemAuthController::class)
+    ->controller(AttendanceController::class)
     ->group(function () {
         Route::post("/getin", 'getin');
 
@@ -32,8 +31,8 @@ Route::prefix("v1")->group(function () {
     Route::prefix('authentication')
     ->controller(UtemAuthController::class)
     ->group(function () {
-        Route::get('/login', 'login');
+        Route::post('/login', 'login');
 
-        Route::get('/result', 'result');
+        Route::get('/result', 'result')->name("success");
     });
 });

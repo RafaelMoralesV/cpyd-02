@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class UtemAuthController extends Controller
 {
@@ -17,13 +18,15 @@ class UtemAuthController extends Controller
      * )
      */
     public function login() {
-        return [
-            "classroom" => "M2-302",
-            "subject" => "INFB8090",
-            "entrance" => "2022-06-15T03:35:01.907Z",
-            "leaving" => "2022-06-15T03:35:01.907Z",
-            "email" => "ssalazar@utem.cl",
-        ];
+        return Http::withHeaders([
+            "X-API-TOKEN" => env("X_API_TOKEN"),
+            "X-API-KEY" => env("X_API_KEY"),
+        ])->withBody(json_encode([
+            "failedUrl" => route("success"),
+            "successUrl" => route("success")
+        ]), "application/json")
+        ->post(env("X_API_URL") . "/v1/tokens/request")
+        ->body();
     }
 
     /**
@@ -36,7 +39,9 @@ class UtemAuthController extends Controller
      *  )
      * )
      */
-    public function result() {
+    public function result(Request $request) {
+        $jwt = $request->validate(['jwt' => 'required'])['jwt'];
+
         return [
             "classroom" => "M2-302",
             "subject" => "INFB8090",
