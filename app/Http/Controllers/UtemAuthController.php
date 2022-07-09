@@ -57,11 +57,21 @@ class UtemAuthController extends Controller
     {
         $params = $request->validated();
 
-        if (!$request->session()->has('API')) {
-            return response()->json([], 403);
+        if (!session('API')) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Necesitas intentar logearte para ver este recurso.',
+            ], 401);
         }
 
-        $sign = $request->session()->get('API.sign');
+        if($params['token'] != session('API.token')){
+            return response()->json([
+                'ok' => false,
+                'message' => 'No se ha podido verificar su token.',
+            ], 401);
+        }
+
+        $sign = session('API.sign');
         $jwt = $params['jwt'];
 
         try {
@@ -73,7 +83,7 @@ class UtemAuthController extends Controller
                 'jwt' => $jwt,
                 'expiresAt' => $exp,
                 'humanReadable' => [
-                    'expiresAt' => $exp->format('h:i:s, d/M/y'),
+                    'expiresAt' => $exp->format('H:i:s, d/M/y'),
                 ],
             ]);
         } catch (SignatureInvalidException $e) {
