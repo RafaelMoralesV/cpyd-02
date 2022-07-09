@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthenticationResultRequest;
+use App\Services\JWTService;
 use Carbon\Carbon;
-use Firebase\JWT\ExpiredException;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-use Firebase\JWT\SignatureInvalidException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -57,50 +54,32 @@ class UtemAuthController extends Controller
     {
         $params = $request->validated();
 
-        if (!session('API')) {
-            return response()->json([
-                'ok' => false,
-                'message' => 'Necesitas intentar logearte para ver este recurso.',
-            ], 401);
-        }
-
         if($params['token'] != session('API.token')){
-            return response()->json([
+            return abort(response()->json([
                 'ok' => false,
                 'message' => 'No se ha podido verificar su token.',
-            ], 401);
+            ], 401));
         }
 
-        $sign = session('API.sign');
-        $jwt = $params['jwt'];
+        $verify = JWTService::verifyToken($params['jwt']);
 
-        try {
-            $decoded = JWT::decode($jwt, new Key($sign, 'HS512'));
-            $exp = Carbon::createFromTimestamp($decoded->exp);
-
-            return response()->json([
-                'ok' => true,
-                'jwt' => $jwt,
-                'expiresAt' => $exp,
-                'humanReadable' => [
-                    'expiresAt' => $exp->format('H:i:s, d/M/y'),
-                ],
-            ]);
-        } catch (SignatureInvalidException $e) {
-            return response()->json([
-                'ok' => false,
-                'message' => "No se ha podido validar la identidad de la petición."
-            ], 401);
-        } catch (\DomainException $e) {
-            return response()->json([
-                'ok' => false,
-                'message' => "El token JWT enviado está malformado."
-            ], 400);
-        } catch (ExpiredException $e) {
-            return response()->json([
-                'ok' => false,
-                'message' => "Su sesión ha finalizado, ingrese nuevamente."
-            ], 401);
+        if(!$verify['ok']){
+            return abort(response()->json(
+                array_merge(['ok' => false], $verify['response']),
+                $verify['suggestedStatusCode'],
+            ));
         }
+
+        $decoded = $verify['decoded'];
+        $exp = Carbon::createFromTimestamp($decoded->exp);
+
+        return response()->json([
+            'ok' => true,
+            'jwt' => $params['jwt'],
+            'expiresAt' => $exp,
+            'humanReadable' => [
+                'expiresAt' => $exp->format('H:i:s, d/M/y'),
+            ],
+        ]);
     }
 }
