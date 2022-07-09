@@ -36,3 +36,9 @@ Route::prefix("v1")->group(function () {
         Route::get('/result', 'result')->name("success");
     });
 });
+
+Route::fallback(function () {
+   return response()->json([
+       'message' => 'No se ha encontrado el recurso solicitado.',
+   ], 404);
+});
