@@ -15,6 +15,9 @@
     "paths": {
         "/v1/classroom/getin": {
             "post": {
+                "tags": [
+                    "classroom-rest"
+                ],
                 "description": "Ingresar a la sala de clases",
                 "operationId": "16736bc6a0c9a1d14c026dad873c82d1",
                 "responses": {
@@ -26,6 +29,9 @@
         },
         "/v1/classroom/getout": {
             "post": {
+                "tags": [
+                    "classroom-rest"
+                ],
                 "description": "Retirarse de la sala de clases",
                 "operationId": "749754b2b1240349277e51616e1f916f",
                 "responses": {
@@ -37,6 +43,9 @@
         },
         "/v1/classroom/attendances": {
             "get": {
+                "tags": [
+                    "classroom-rest"
+                ],
                 "description": "Lista de asistencias",
                 "operationId": "dc759f5060e21b8784344c9f1cc74e04",
                 "responses": {
@@ -58,6 +67,9 @@
         },
         "/v1/authenticaiton/login": {
             "get": {
+                "tags": [
+                    "authentication-rest"
+                ],
                 "description": "Login",
                 "operationId": "18e21c4346c62b11ec4322dc6e03ae32",
                 "responses": {
@@ -69,6 +81,9 @@
         },
         "/v1/authentication/result": {
             "get": {
+                "tags": [
+                    "authentication-rest"
+                ],
                 "description": "Auth result",
                 "operationId": "ef0bce97f641fba4ed4131b09539f063",
                 "responses": {

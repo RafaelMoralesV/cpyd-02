@@ -14,6 +14,7 @@ class UtemAuthController extends Controller
      * @OA\Get(
      *  path="/v1/authenticaiton/login",
      *  description="Login",
+     *  tags={"authentication-rest"},
      *  @OA\Response(
      *      response="default",
      *      description="Respuesta de Login",
@@ -44,6 +45,7 @@ class UtemAuthController extends Controller
      * @OA\Get(
      *  path="/v1/authentication/result",
      *  description="Auth result",
+     *  tags={"authentication-rest"},
      *  @OA\Response(
      *      response="default",
      *      description="Resultado de autenticacion",

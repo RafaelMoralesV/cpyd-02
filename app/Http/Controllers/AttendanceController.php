@@ -10,6 +10,7 @@ class AttendanceController extends Controller
      * @OA\Post(
      *  path="/v1/classroom/getin",
      *  description="Ingresar a la sala de clases",
+     *  tags={"classroom-rest"},
      *  @OA\Response(
      *      response="default",
      *      description="Respuesta de ingreso",
@@ -28,6 +29,7 @@ class AttendanceController extends Controller
      * @OA\Post(
      *  path="/v1/classroom/getout",
      *  description="Retirarse de la sala de clases",
+     *  tags={"classroom-rest"},
      *  @OA\Response(
      *      response="default",
      *      description="Respuesta de salida",
@@ -47,6 +49,7 @@ class AttendanceController extends Controller
      * @OA\Get(
      *  path="/v1/classroom/attendances",
      *  description="Lista de asistencias",
+     *  tags={"classroom-rest"},
      *  @OA\Response(
      *      response="default",
      *      description="Respuesta de asistencias",
