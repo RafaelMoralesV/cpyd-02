@@ -17,7 +17,7 @@ class UtemAuth
      * @param Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return Response|RedirectResponse
      */
-    public function handle(Request $request, Closure $next): Response|RedirectResponse
+    public function handle(Request $request, Closure $next)
     {
         $auth = $request->header('Authorization');
         if(!$auth){
@@ -33,6 +33,10 @@ class UtemAuth
 
         if(!$verify['ok']){
             return abort(response()->json($verify['response'], $verify['suggestedStatusCode']));
+        }
+
+        if(!session()->has('email')){
+            session()->put('email', $verify['decoded']->email);
         }
 
         return $next($request);
