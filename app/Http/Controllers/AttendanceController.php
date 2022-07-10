@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GetInRequest;
+use App\Http\Requests\GetOutRequest;
 use App\Models\Attendance;
 use Carbon\Carbon;
 
@@ -43,6 +44,7 @@ class AttendanceController extends Controller
         $data = $request->validated();
         $data['email'] = session('email');
         $data['entrance'] = Carbon::createFromFormat("Y-m-d\TH:i:s.v\Z", $data['entrance'])->toDateTimeString();
+        $data['leaving'] = Carbon::createFromFormat("Y-m-d\TH:i:s.v\Z", $data['leaving'])->toDateTimeString();
 
         return Attendance::create($data);
     }

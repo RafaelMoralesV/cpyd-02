@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 class UtemAuthController extends Controller
 {
     /**
-     * @OA\Get(
+     * @OA\Post(
      *  path="/v1/authenticaiton/login",
      *  description="Login",
      *  tags={"authentication-rest"},
@@ -23,7 +23,7 @@ class UtemAuthController extends Controller
      */
     public function login(Request $request)
     {
-        $res = Http::withHeaders([
+        $res = Http::withoutVerifying()->withHeaders([
             "X-API-TOKEN" => env("X_API_TOKEN"),
             "X-API-KEY" => env("X_API_KEY"),
         ])->withBody(json_encode([

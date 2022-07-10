@@ -56,12 +56,12 @@
             }
         },
         "/v1/authenticaiton/login": {
-            "get": {
+            "post": {
                 "tags": [
                     "authentication-rest"
                 ],
                 "description": "Login",
-                "operationId": "18e21c4346c62b11ec4322dc6e03ae32",
+                "operationId": "26aeb48852e3228d8fab08910b8af377",
                 "responses": {
                     "default": {
                         "description": "Respuesta de Login"
