@@ -46,7 +46,16 @@ class AttendanceController extends Controller
         $data['entrance'] = Carbon::createFromFormat("Y-m-d\TH:i:s.v\Z", $data['entrance'])->toDateTimeString();
         $data['leaving'] = Carbon::createFromFormat("Y-m-d\TH:i:s.v\Z", $data['leaving'])->toDateTimeString();
 
-        return Attendance::create($data);
+        $keys = array_flip(['email', 'classroom', 'subject', 'entrance']);
+        $att = Attendance::where(array_intersect_key($data, $keys))->first();
+
+        if(!$att) {
+            return abort(404, 'No se ha encontrado una asistencia con esos parámetros');
+        }
+
+        $att->update($data);
+
+        return $att;
     }
 
     /**
@@ -61,11 +70,6 @@ class AttendanceController extends Controller
      * )
      */
     public function attendances() {
-        return [
-            "classroom" => "M2-302",
-            "subject" => "INFB8090",
-            "entrance" => "2022-06-15T01:19:55.984Z",
-            "leaving" => "2022-06-15T01:19:55.984Z",
-        ];
+        return Attendance::where(['email' => session('email')])->get();
     }
 }
