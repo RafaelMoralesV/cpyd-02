@@ -18,7 +18,7 @@ class AttendanceFactory extends Factory
     {
         return [
             'classroom' => $this->faker->company(),
-            'subject'=> $this->faker->address(),
+            'subject'=> $this->faker->city(),
             'email' => $this->faker->email(),
         ];
     }

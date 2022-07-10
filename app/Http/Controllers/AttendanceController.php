@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetInRequest;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -16,12 +17,9 @@ class AttendanceController extends Controller
      *  )
      * )
      */
-    public function getin() {
-        return [
-            "classroom" => "M2-302",
-            "subject" => "INFB8090",
-            "entrance" => "2022-06-15T03:31:15.807Z",
-        ];
+    public function getin(GetInRequest $request) {
+
+        return $request->validated();
     }
 
     /**
