@@ -38,13 +38,13 @@ class AttendanceController extends Controller
      *  )
      * )
      */
-    public function getout() {
-        return [
-            "classroom" => "M2-302",
-            "subject" => "INFB8090",
-            "entrance" => "2022-06-15T03:31:15.807Z",
-            "leaving" => "2022-06-15T03:31:15.807Z",
-        ];
+
+    public function getout(GetOutRequest $request) {
+        $data = $request->validated();
+        $data['email'] = session('email');
+        $data['entrance'] = Carbon::createFromFormat("Y-m-d\TH:i:s.v\Z", $data['entrance'])->toDateTimeString();
+
+        return Attendance::create($data);
     }
 
     /**

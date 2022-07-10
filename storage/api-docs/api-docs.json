@@ -55,16 +55,6 @@
                 }
             }
         },
-        "/": {
-            "get": {
-                "description": "Home page",
-                "responses": {
-                    "default": {
-                        "description": "Welcome page"
-                    }
-                }
-            }
-        },
         "/v1/authenticaiton/login": {
             "get": {
                 "tags": [
