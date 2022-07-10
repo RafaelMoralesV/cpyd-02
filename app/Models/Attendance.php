@@ -15,4 +15,14 @@ class Attendance extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    protected $fillable = [
+        'classroom',
+        'subject',
+        'email',
+        'entrance',
+        'leaving',
+    ];
+
+    protected $hidden = ['id'];
 }

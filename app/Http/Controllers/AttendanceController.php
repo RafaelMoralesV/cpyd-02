@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GetInRequest;
-use Illuminate\Http\Request;
+use App\Models\Attendance;
+use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
@@ -18,8 +19,11 @@ class AttendanceController extends Controller
      * )
      */
     public function getin(GetInRequest $request) {
+        $data = $request->validated();
+        $data['email'] = session('email');
+        $data['entrance'] = Carbon::createFromFormat("Y-m-d\TH:i:s.v\Z", $data['entrance'])->toDateTimeString();
 
-        return $request->validated();
+        return Attendance::create($data);
     }
 
     /**

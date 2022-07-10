@@ -35,6 +35,10 @@ class UtemAuth
             return abort(response()->json($verify['response'], $verify['suggestedStatusCode']));
         }
 
+        if(!session()->has('email')){
+            session()->put('email', $verify['decoded']->email);
+        }
+
         return $next($request);
     }
 }
