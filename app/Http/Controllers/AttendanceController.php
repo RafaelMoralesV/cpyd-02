@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\GetInRequest;
 use App\Http\Requests\GetOutRequest;
 use App\Models\Attendance;
-use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
@@ -21,11 +20,7 @@ class AttendanceController extends Controller
      * )
      */
     public function getin(GetInRequest $request) {
-        $data = $request->validated();
-        $data['email'] = session('email');
-        $data['entrance'] = Carbon::createFromFormat("Y-m-d\TH:i:s.v\Z", $data['entrance'])->toDateTimeString();
-
-        return Attendance::create($data);
+        return Attendance::create($request->validated());
     }
 
     /**
@@ -42,9 +37,6 @@ class AttendanceController extends Controller
 
     public function getout(GetOutRequest $request) {
         $data = $request->validated();
-        $data['email'] = session('email');
-        $data['entrance'] = Carbon::createFromFormat("Y-m-d\TH:i:s.v\Z", $data['entrance'])->toDateTimeString();
-        $data['leaving'] = Carbon::createFromFormat("Y-m-d\TH:i:s.v\Z", $data['leaving'])->toDateTimeString();
 
         $keys = array_flip(['email', 'classroom', 'subject', 'entrance']);
         $att = Attendance::where(array_intersect_key($data, $keys))->first();

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FollowsDateFormat;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GetInRequest extends ApiRequest
@@ -25,8 +27,26 @@ class GetInRequest extends ApiRequest
     {
         return [
             "classroom" => "required",
-            "entrance" => "required",
+            "entrance" => ["required", new FollowsDateFormat()],
             "subject" => "required",
         ];
+    }
+
+    public function validated($key = null, $default = null)
+    {
+        if($key){
+            return parent::validated($key, $default);
+        }
+
+        $validated = parent::validated($key, $default);
+
+        $validated['entrance'] = Carbon::createFromFormat(
+            "Y-m-d\TH:i:s.v\Z",
+            $validated['entrance']
+        )->toDateTimeString();
+
+        $validated['email'] = session('email');
+
+        return $validated;
     }
 }
