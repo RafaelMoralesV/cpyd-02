@@ -1,3 +1,60 @@
+## Integrantes
+- Rafael Morales Venegas
+- Diego Oyarce Trejo
+
+## Instrucciones
+
+Primero, cree el archivo .env a partir del ejemplo provisto en el repositorio con el siguiente comando:
+
+"""shell
+cp .env.example .env
+"""
+
+Para conseguir la imagen docker del proyecto, es necesario utilizar laravel sail. Esto se puede lograr de dos formas:
+
+### Con composer
+"""shell
+~$ composer install
+"""
+
+### Sin composer
+"""shell
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    laravelsail/php81-composer:latest \
+    composer install --ignore-platform-reqs
+"""
+
+Una vez se instalen las dependencias del proyecto, puede construir la imagen al intentar levantar el servidor con sail. Para esto, ejecuta el siguiente comando desde la raiz del proyecto:
+
+"""shell
+./vendor/bin/sail up
+"""
+
+Esto hará que sail construya la imagen docker, y luego, a partir del archivo docker compose encontrado en el repositorio, arme un entorno con mysql. En caso de necesitarse algo distinto, se debe modificar el archivo docker-compose a necesidad.
+
+** Es necesario correr las migraciones **
+
+Una vez que el contenedor sea levantado, es necesario correr el siguiente comando:
+
+"""shell
+./vendor/bin/sail artisan migrate
+"""
+
+** Es necesario generar la llave del la aplicación **
+
+Esto puede ser logrado con el siguiente comando:
+
+"""shell
+./vendor/bin/sail artisan key:generate
+"""
+
+En caso de no haberse hecho, es posible que al dirigirse a localhost/ (o a la ubicación donde sea apuntado el contenedor de la aplicación) se muestre una pantalla de error. En esta misma pantalla es posible generar la llave de la aplicación presionando un botón dentro de la misma.
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
